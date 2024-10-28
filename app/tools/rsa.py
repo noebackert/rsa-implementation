@@ -17,6 +17,8 @@ class RSA:
         self.q = q
         self.N = p*q
         self.phi_N = (p-1)*(q-1)
+        if e*d % self.phi_N != 1 and e != 0 and d != 0:
+            raise ValueError("e*d mod phi(N) must be equal to 1")
         if e == 0:
             self.e = Toolbox.e_selection(self.phi_N)
         else:
@@ -36,3 +38,20 @@ class RSA:
         and return the decrypted message as an integer"""
         return ModularInteger(cipher, self.N).square_and_multiply(self.d).n
 
+
+    def encryption_str(self, message:str)->str:
+        """Encrypt the message using the public key (e,N)
+        and return the encrypted message as a string"""
+        separated_str=[message[i:i+3] for i in range(0, len(message), 3)]
+        separated_str_hex=[hex(int.from_bytes(i.encode())) for i in separated_str]        
+        encrypted_str=[int(self.encryption(int(i, 16))) for i in separated_str_hex]
+        return encrypted_str
+    
+    def decryption_str(self, encrypted_message:list[int])->str:
+        """Decrypt the encrypted message using the private key (d,N)
+        and return the decrypted message as a string"""
+        try:
+            decrypted_str=[bytes.fromhex(hex(self.decryption(i))[2:]).decode() for i in encrypted_message]
+        except ValueError:
+            raise ValueError("The decryption key must not be valid")
+        return "".join(decrypted_str)
