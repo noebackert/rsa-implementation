@@ -23,8 +23,7 @@
 Options:
 
     -h, --help            # Show this help message and exit
-    -p P                  # Choose a prime number p
-    -q Q                  # Choose a prime number q
+    -N N                  # Choose the mod N
     -e E                  # Choose a public exponent e
     -f                    # Use the parameters stored in the file rsa_keys.txt
    

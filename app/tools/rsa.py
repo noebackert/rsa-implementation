@@ -9,24 +9,30 @@ from tools.toolbox import Toolbox
 
 class RSA:
     """A class to manage RSA key generation, encryption and decryption algorithms."""
-    def __init__(self, p:int, q:int, e:int=0, d:int=0):
-        """Initialize the RSA object with the parameters p, q, e and d, 
-        if e and d are not provided, they will be generated using the generating
-        functions created in the Toolbox module"""
-        self.p = p
-        self.q = q
-        self.N = p*q
-        self.phi_N = (p-1)*(q-1)
-        if e*d % self.phi_N != 1 and e != 0 and d != 0:
-            raise ValueError("e*d mod phi(N) must be equal to 1")
-        if e == 0:
-            self.e = Toolbox.e_selection(self.phi_N)
-        else:
+    def __init__(self, p:int = None, q:int = None, e:int = None, N:int = None):
+        """
+        Initialize the RSA object with either:
+        - p, q, and e to calculate d, N, and Phi(N),
+        - or N and e for encryption-only mode.
+        """
+        if p is not None and q is not None and e is not None:
+            self.p = p
+            self.q = q
+            self.N = p * q
+            self.phi_N = (p - 1) * (q - 1)
             self.e = e
-        if d == 0:
             self.d = ModularInteger(self.e, self.phi_N).mult_inverse().n
+
+        elif N is not None and e is not None:
+            self.N = N
+            self.e = e
+            self.d = None
+            self.p = None
+            self.q = None
+            self.phi_N = None
+
         else:
-            self.d = d
+            raise ValueError("Invalid parameters. Provide either (p, q, e) or (N, e).")
 
     def encryption(self, message:int)->int:
         """Encrypt the message using the public key (e,N)
@@ -55,3 +61,4 @@ class RSA:
         except ValueError:
             raise ValueError("The decryption key must not be valid")
         return "".join(decrypted_str)
+    
