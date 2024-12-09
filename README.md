@@ -42,3 +42,7 @@ Then share the public key e,N
 python rsa.py enc <message> -e <e> -N <N>
 python rsa.py dec <message> -f 
 ```
+
+# Warning
+
+The use of python3.10 or higher is required because of the use of type annotations inside the functions. (List[int])
