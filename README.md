@@ -30,4 +30,15 @@ Options:
     -N N                  # Choose the mod N
     -e E                  # Choose a public exponent e
     -f                    # Use the parameters stored in the file rsa_keys.txt
-   
+
+# Example to share a secret :
+
+```py
+python rsa.py gen
+```
+Then share the public key e,N
+
+```py
+python rsa.py enc <message> -e <e> -N <N>
+python rsa.py dec <message> -f 
+```

@@ -6,7 +6,7 @@ Brief: A class to manage modular arithmetic and number theory in a simpler way.
 from tools.toolbox import Toolbox
 
 class ModularInteger:
-    """A class to manage modular arithmetic and number theory."""
+    """A class to manage modular arithmetic and number theory for course INSE6110@Concordia."""
     def __init__(self, n: int, mod: int) -> None:
         try:
             if not isinstance(n, int) or not isinstance(mod, int):
@@ -65,10 +65,9 @@ class ModularInteger:
         """Define power function using square and multiply algorithm
         parameters:
         - exp: the exponent to which the number is raised"""
-        bin_exp = bin(exp)[2:]
+        bin_exp = bin(exp)[2:] # bin returns a string starting with '0b'
         N = ModularInteger(self.n, self.mod)
         for i in range(1,len(bin_exp)):
-            # for each bit of the exponent, square the number and multiply by n if the bit is 1
             if bin_exp[i]=='0':
                 N = N*N 
             else:
