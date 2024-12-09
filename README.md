@@ -2,7 +2,7 @@
 
 ## How to run ?
 
-    ./venv/Scripts/activate
+    ./.venv/Scripts/activate
 
     python ./rsa.py -h
 

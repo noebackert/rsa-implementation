@@ -95,4 +95,4 @@ if __name__=="__main__":
                 exit(1)
             print(f"Verifying the signature using e={rsa.e}...")
             message = rsa.verify_str(sys.argv[2], sys.argv[3])
-            print(f"Message: {message}")
+            print(f"Decrypted Message: {message[0]}\nOriginal Message: {message[1]}\nSignature Verification: {message[2]}")
