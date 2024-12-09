@@ -28,7 +28,7 @@ if __name__=="__main__":
             print("  -f                    Use the file rsa_keys.txt to get the parameters")
             exit(0)
         
-        if "-N" in sys.argv and "-e" in sys.argv:
+        elif "-N" in sys.argv and "-e" in sys.argv:
             N = int(sys.argv[sys.argv.index("-N")+1])
             e = int(sys.argv[sys.argv.index("-e")+1])
             rsa = RSA(None, None, e, N)
@@ -66,8 +66,7 @@ if __name__=="__main__":
                 N = int(sys.argv[sys.argv.index("-N")+1])
             if "-e" in sys.argv:
                 e = int(sys.argv[sys.argv.index("-e")+1])
-            print(f"Encrypting using p={p}, q={q}, N={N}, e={e}")
-
+            print(f"Encrypting using p={rsa.p}, q={rsa.q}, N={rsa.N}, e={rsa.e}")
             encrypted_str=rsa.encryption_str(sys.argv[2])
             print(f"Encrypted list: {encrypted_str}")
 
@@ -80,7 +79,7 @@ if __name__=="__main__":
                 exit(1)
             print('Decrypting...')
             decrypted_str=rsa.decryption_str(sys.argv[2])
-            print(f"Decrypted message: {decrypted_str}")
+            print(f'Decrypted message: "{decrypted_str}"')
         
         elif label=="sign":
             if len(sys.argv) < 3:
